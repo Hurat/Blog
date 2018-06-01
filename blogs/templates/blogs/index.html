@@ -1,0 +1,19 @@
+{% extends "blogs/base.html" %}
+
+{% block content %}
+  <p>Feel free to write anything you want in this blog.</p>
+
+  <ul>
+    {% for blogpost in blogposts %}
+      <li>
+          <p>{{ blogpost.title }}</p>
+          <p>{{ blogpost.date_added|date:'M d, Y H:i' }}</p>
+          <p>{{ blogpost.text|linebreaks }}</p>
+          <a href="{% url 'blogs:edit post'">Edit Post</a>
+      </li>
+    {% empty %}
+      <li>No Posts have been entered yet.</li>
+    {% endfor %}
+  </ul>
+
+{% endblock content %}
