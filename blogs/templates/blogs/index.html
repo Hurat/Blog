@@ -4,12 +4,15 @@
   <p>Feel free to write anything you want in this blog.</p>
 
   <ul>
-    {% for blogpost in blogposts %}
+    {% for post in posts %}
       <li>
-          <p>{{ blogpost.title }}</p>
-          <p>{{ blogpost.date_added|date:'M d, Y H:i' }}</p>
-          <p>{{ blogpost.text|linebreaks }}</p>
-          <a href="{% url 'blogs:edit post'">Edit Post</a>
+          <p>
+            <a href="{% url 'blogs:post' post.id %}">
+              {{ post.title }}
+            </a>
+          </p>
+          <p>{{ post.date_added|date:'M d, Y H:i' }}</p>
+          <p>{{ post.text|linebreaks }}</p>
       </li>
     {% empty %}
       <li>No Posts have been entered yet.</li>

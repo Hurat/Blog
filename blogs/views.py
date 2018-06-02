@@ -11,9 +11,15 @@ from .forms import BlogPostForm
 
 def index(request):
     """Show all of the blogposts."""
-    blogposts = BlogPost.objects.order_by('-date_added')
-    context = {'blogposts': blogposts}
+    posts = BlogPost.objects.order_by('-date_added')
+    context = {'posts': posts}
     return render(request, 'blogs/index.html', context)
+
+def post(request, post_id):
+    """Show a single post."""
+    post = BlogPost.objects.get(id=post_id)
+    context = {'post': post,}
+    return render(request, 'blogs/post.html', context)
 
 def new_post(request):
     """Add a new post."""
@@ -42,7 +48,7 @@ def edit_post(request, post_id):
         form = BlogPostForm(instance=post, data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('blogs:index'), args=[post.id])
+            return HttpResponseRedirect(reverse('blogs:post', args=[post.id]))
     
-    context = {'form': form}
+    context = {'post': post, 'form': form}
     return render(request, 'blogs/edit_post.html', context)
